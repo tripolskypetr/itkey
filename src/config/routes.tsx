@@ -1,46 +1,61 @@
 import { ISwitchItem } from 'react-declarative';
 
-import TodoListPage from '../pages/TodoListPage';
-import TodoOnePage from '../pages/TodoOnePage';
+import ClientListPage from '../pages/view/ClientListPage';
+import ClientOnePage from '../pages/view/ClientOnePage';
 
-import ErrorPage from '../pages/ErrorPage';
-import LoginPage from '../pages/LoginPage';
+import ErrorPage from '../pages/base/ErrorPage';
+import LoginPage from '../pages/base/LoginPage';
 
 import ioc from '../lib/ioc';
 
-export const routes: ISwitchItem[] = [
+interface IRouteItem extends ISwitchItem {
+  sideMenu?: string;
+}
+
+const baseRoutes: IRouteItem[] = [
+  {
+    path: '/error_page',
+    element: ErrorPage,
+  },
+  {
+    path: '/login_page',
+    element: LoginPage,
+  },
+];
+
+const viewRoutes: IRouteItem[] = [
+  {
+    path: '/client_list',
+    sideMenu: "root.client.client_list",
+    element: ClientListPage,
+  },
+  {
+    path: '/client_list/:id',
+    sideMenu: "root.client.client_list",
+    element: ClientOnePage,
+  },
+];
+
+export const routes: IRouteItem[] = [
   {
     path: '/',
+    sideMenu: "root.client.client_list",
     prefetch: async () => {
       await ioc.firebaseService.prefetch();
     },
     redirect: () => {
       if (ioc.firebaseService.isAuthorized) {
-        return "/todos";
+        return "/client_list";
       }
-      return "/login-page";
+      return "/login_page";
     },
   },
-  {
-    path: '/todos',
-    element: TodoListPage,
-  },
-  {
-    path: '/todos/:id',
-    element: TodoOnePage,
-  },
-  {
-    path: '/error-page',
-    element: ErrorPage,
-  },
-  {
-    path: '/login-page',
-    element: LoginPage,
-  },
-  {
-    path: '/unauthorized-page',
-    element: ErrorPage,
-  }
+  ...viewRoutes,
+  ...baseRoutes,
 ];
+
+export const sideMenuClickMap: Record<string, string> = {
+  "root.client.client_list": "/client_list",
+};
 
 export default routes;

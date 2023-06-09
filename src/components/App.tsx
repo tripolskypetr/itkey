@@ -1,19 +1,18 @@
 import { observer } from "mobx-react";
 
-import { Switch, Scaffold, serviceManager } from "react-declarative";
+import { Switch, Scaffold2, Spinner, serviceManager } from "react-declarative";
 
 import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
 
-import UserInfo from "./common/UserInfo";
+import useRouteItem from "../hooks/useRouteItem";
 
-import useLoader from "../hooks/useLoader";
-
-import routes from "../config/routes";
+import routes, { sideMenuClickMap } from "../config/routes";
 import sidemenu from "../config/sidemenu";
 import scaffoldmenu from "../config/scaffoldmenu";
 
 import ioc from "../lib/ioc";
+
+import { CC_APP_NAME } from "../config/params";
 
 const Loader = () => (
   <Box
@@ -32,16 +31,16 @@ const Loader = () => (
       background: (theme) => theme.palette.background.paper,
     }}
   >
-    <CircularProgress />
+    <Spinner />
   </Box>
 );
 
 const Fragment = () => <></>;
 
 const App = observer(() => {
-  const { loader, setLoader } = useLoader();
-  const handleLoadStart = () => setLoader(true);
-  const handleLoadEnd = () => setLoader(false);
+  const item = useRouteItem();
+  const handleLoadStart = () => ioc.layoutService.setAppbarLoader(true);
+  const handleLoadEnd = () => ioc.layoutService.setAppbarLoader(false);
   const handleAction = async (action: string) => {
     if (action === 'logout-action') {
       await ioc.firebaseService.logout();
@@ -54,15 +53,18 @@ const App = observer(() => {
     await serviceManager.unload(true);
   };
   return (
-    <Scaffold
-      dense
-      loadingLine={loader}
+    <Scaffold2
+      appName={CC_APP_NAME}
+      activeOptionPath={item?.sideMenu || "root.client.client_list"}
+      loading={ioc.layoutService.hasAppbarLoader}
       options={sidemenu}
       actions={scaffoldmenu}
       Loader={Loader}
-      BeforeSearch={UserInfo}
-      onOptionClick={(name) => ioc.routerService.push(name)}
+      onOptionClick={(path) => {
+        ioc.routerService.push(sideMenuClickMap[path] || "/not_found");
+      }}
       onAction={handleAction}
+
     >
       <Switch
         Loader={Fragment}
@@ -73,7 +75,10 @@ const App = observer(() => {
         onInit={handleInit}
         onDispose={handleDispose}
       />
-    </Scaffold>
+      {ioc.layoutService.hasModalLoader && (
+        <Loader />
+      )}
+    </Scaffold2>
   );
 });
 

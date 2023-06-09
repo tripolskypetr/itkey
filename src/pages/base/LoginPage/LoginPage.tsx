@@ -1,11 +1,11 @@
 import { observer } from "mobx-react-lite";
 import { AuthView, FieldType, IField } from "react-declarative";
 
-import Logo from "../../components/common/Logo";
+import Logo from "../../../components/common/Logo";
 
-import { CC_MOCK_USER_EMAIL, CC_MOCK_USER_PASSWORD } from "../../config/params";
+import { CC_MOCK_USER_EMAIL, CC_MOCK_USER_PASSWORD } from "../../../config/params";
 
-import ioc from '../../lib/ioc';
+import ioc from '../../../lib/ioc';
 
 const fields: IField[] = [
     {
@@ -61,7 +61,7 @@ export const LoginPage = observer(() => {
         }
         isOk = await ioc.firebaseService.login(data);
         if (isOk) {
-            ioc.routerService.push('/todos');
+            ioc.routerService.push('/client_list');
         }
     };
 

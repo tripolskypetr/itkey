@@ -8,9 +8,9 @@ import createCache from "@emotion/cache";
 
 import { ModalProvider } from "react-declarative";
 import { ErrorBoundary } from "react-declarative";
-import { LoaderProvider } from "./hooks/useLoader";
 
 import "./polyfills";
+import "./i18n";
 
 import App from "./components/App";
 import AlertProvider from "./components/AlertProvider";
@@ -37,9 +37,7 @@ const wrappedApp = (
         <ThemeProvider theme={THEME_DARK}>
           <ModalProvider>
             <AlertProvider>
-              <LoaderProvider>
-                <App />
-              </LoaderProvider>
+              <App />
             </AlertProvider>
           </ModalProvider>
         </ThemeProvider>

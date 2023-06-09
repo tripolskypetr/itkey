@@ -1,4 +1,4 @@
-export const CC_APP_NAME = 'AppName';
+export const CC_APP_NAME = 'OneCRM';
 
 export const CC_FIREBASE_CONFIG = {
     apiKey: "AIzaSyAT4f6fTjEgH2qwVouBCSbQt3XNtxqmsVk",
@@ -10,7 +10,7 @@ export const CC_FIREBASE_CONFIG = {
     measurementId: "G-5ZC1JQ7XQP"
 };
 
-export const CC_TODO_COLLECTION = 'todos';
+export const CC_CLIENT_COLLECTION = 'client';
 
 export const CC_MOCK_USER_EMAIL = 'user@noemail.com';
 export const CC_MOCK_USER_PASSWORD = 'password';

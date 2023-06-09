@@ -1,16 +1,17 @@
 const baseServices = {
     firebaseService: Symbol.for('firebaseService'),
     alertService: Symbol.for('alertService'),
+    layoutService: Symbol.for('layoutService'),
     routerService: Symbol.for('routerService'),
     errorService: Symbol.for('errorService'),
 };
 
 const dbServices = {
-    todoDbService: Symbol.for('todoDbService'),
+    clientDbService: Symbol.for('clientDbService'),
 };
 
 const viewServices = {
-    todoViewService: Symbol.for('todoViewService'),
+    clientViewService: Symbol.for('clientViewService'),
 };
 
 export const TYPES = {

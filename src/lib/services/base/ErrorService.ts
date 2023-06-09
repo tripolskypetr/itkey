@@ -15,7 +15,7 @@ export class ErrorService {
 
     handleGlobalError = (e: Error) => {
         console.error(e);
-        this.routerService.push('/error-page');
+        this.routerService.push('/error_page');
     };
 
 };

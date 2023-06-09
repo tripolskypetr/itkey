@@ -4,10 +4,11 @@ import FirebaseService from "./services/base/FirebaseService";
 import AlertService from "./services/base/AlertService";
 import RouterService from "./services/base/RouterService";
 import ErrorService from "./services/base/ErrorService";
+import LayoutService from "./services/base/LayoutService";
 
-import TodoDbService from "./services/db/TodoDbService";
+import ClientDbService from "./services/db/ClientDbService";
 
-import TodoViewService from "./services/view/TodoViewService";
+import ClientViewService from "./services/view/ClientViewService";
 
 import TYPES from './types';
 import "./config";
@@ -16,15 +17,16 @@ const baseServices = {
     firebaseService: inject<FirebaseService>(TYPES.firebaseService),
     alertService: inject<AlertService>(TYPES.alertService),
     routerService: inject<RouterService>(TYPES.routerService),
+    layoutService: inject<LayoutService>(TYPES.layoutService),
     errorService: inject<ErrorService>(TYPES.errorService),
 };
 
 const dbServices = {
-    todoDbService: inject<TodoDbService>(TYPES.todoDbService),
+    clientDbService: inject<ClientDbService>(TYPES.clientDbService),
 };
 
 const viewServices = {
-    todoViewService: inject<TodoViewService>(TYPES.todoViewService),
+    clientViewService: inject<ClientViewService>(TYPES.clientViewService),
 };
 
 const ioc = {
@@ -34,15 +36,13 @@ const ioc = {
 };
 
 window.addEventListener('unhandledrejection', () => {
-    ioc.routerService.push('/error-page');
+    ioc.routerService.push('/error_page');
 });
 
 /*window.addEventListener('error', () => {
-    ioc.routerService.push('/error-page');
+    ioc.routerService.push('/error_page');
 });*/
 
-// if (process.env.REACT_APP_STAGE === 'dev') {
-    (window as any).ioc = ioc;
-// }
+(window as any).ioc = ioc;
 
 export default ioc;

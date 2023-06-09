@@ -5,36 +5,47 @@ import {
     ActionType,
     TypedField,
     IColumn,
-    IField,
     IListAction,
     useArrayPaginator,
     SelectionMode,
-    useActionModal,
-    useSubject,
 } from 'react-declarative';
 import { observer } from 'mobx-react';
 
 import Delete from '@mui/icons-material/Delete';
 import Add from '@mui/icons-material/Add';
 
-import ioc from '../../lib/ioc';
-
-import useLoader from '../../hooks/useLoader';
+import ioc from '../../../lib/ioc';
+import { IClientDocument } from '../../../lib/services/db/ClientDbService';
 
 const filters: TypedField[] = [
     {
         type: FieldType.Text,
-        name: 'title',
-        title: 'Title',
+        name: 'first_name',
+        title: 'First name',
     },
     {
-        type: FieldType.Checkbox,
-        name: 'completed',
-        title: 'Completed',
+        type: FieldType.Text,
+        name: 'last_name',
+        title: 'Last name',
+    },
+    {
+        type: FieldType.Text,
+        name: 'middle_name',
+        title: 'Middle name',
+    },
+    {
+        type: FieldType.Text,
+        name: 'email',
+        title: 'Email',
+    },
+    {
+        type: FieldType.Text,
+        name: 'phone',
+        title: 'Phone',
     },
 ];
 
-const columns: IColumn[] = [
+const columns: IColumn<IClientDocument>[] = [
     {
         type: ColumnType.Text,
         field: 'id',
@@ -43,18 +54,33 @@ const columns: IColumn[] = [
         width: () => 150,
     },
     {
-        type: ColumnType.Text,
-        headerName: 'Title',
+        type: ColumnType.Compute,
+        headerName: 'Display Name',
         primary: true,
-        field: 'title',
-        width: (fullWidth) => Math.max(fullWidth - 450, 200),
+        compute: ({
+            first_name,
+            last_name,
+            middle_name,
+        }) => [
+            first_name,
+            last_name,
+            middle_name
+        ].filter((value) => value.length).join(' '),
+        width: (fullWidth) => Math.max(fullWidth / 3 - 250, 200),
     },
     {
-        type: ColumnType.CheckBox,
-        headerName: 'Completed',
+        type: ColumnType.Text,
+        headerName: 'Phone',
         primary: true,
-        field: 'completed',
-        width: () => 100,
+        field: 'phone',
+        width: (fullWidth) => Math.max(fullWidth / 3 - 250, 200),
+    },
+    {
+        type: ColumnType.Text,
+        headerName: 'Email',
+        primary: true,
+        field: 'email',
+        width: (fullWidth) => Math.max(fullWidth / 3 - 250, 200),
     },
     {
         type: ColumnType.Action,
@@ -94,51 +120,13 @@ const rowActions = [
     },
 ];
 
-const createFields: IField[] = [
-    {
-        type: FieldType.Text,
-        name: 'title',
-        title: 'Title',
-    }
-];
-
 const heightRequest = () => window.innerHeight - 75;
 
-export const TodoListPage = observer(() => {
+export const ClientListPage = observer(() => {
 
-    const { setLoader } = useLoader();
-
-    const reloadSubject = useSubject<void>();
-
-    const handleCreate = async (data: { title: string; } | null) => {
-        if (!data) {
-            return true;
-        }
-        try {
-            await ioc.todoViewService.create(data.title);
-            reloadSubject.next();
-            return true;
-        } catch {
-            return false;
-        }
-    };
-
-    const {
-        pickData,
-        render,
-    } = useActionModal({
-        title: 'Todo creation',
-        fields: createFields,
-        handler: () => ({
-            title: 'Another boring todo item',
-        }),
-        onSubmit: handleCreate,
-        fallback: ioc.errorService.handleGlobalError,
-    });
-
-    const handler = useArrayPaginator(async () => await ioc.todoViewService.list(), {
-        onLoadStart: () => setLoader(true),
-        onLoadEnd: () => setLoader(false),
+    const handler = useArrayPaginator(async () => await ioc.clientViewService.list(), {
+        onLoadStart: () => ioc.layoutService.setAppbarLoader(true),
+        onLoadEnd: () => ioc.layoutService.setAppbarLoader(false),
         fallback: ioc.errorService.handleGlobalError,
     });
 
@@ -148,18 +136,18 @@ export const TodoListPage = observer(() => {
 
     const handleAction = (action: string) => {
         if (action === 'add-action') {
-            pickData();
+            ioc.routerService.push(`/client_list/create`);
         }
     };
 
     const handleClick = (row: any) => {
-        ioc.routerService.push(`/todos/${row.id}`);
+        ioc.routerService.push(`/client_list/${row.id}`);
     };
 
     return (
         <>
             <List
-                title="Todo list"
+                title="Client list"
                 filterLabel="Filters"
                 heightRequest={heightRequest}
                 rowActions={rowActions}
@@ -170,12 +158,10 @@ export const TodoListPage = observer(() => {
                 onRowAction={handleRowActionsClick}
                 onRowClick={handleClick}
                 onAction={handleAction}
-                reloadSubject={reloadSubject}
                 selectionMode={SelectionMode.Multiple}
             />
-            {render()}
         </>
     );
 });
 
-export default TodoListPage;
+export default ClientListPage;
