@@ -107,6 +107,7 @@ export const ClientOnePage = ({
                 }
                 return isOk;
             },
+            fallback: ioc.errorService.handleGlobalError,
         });
 
         return (
@@ -129,7 +130,7 @@ export const ClientOnePage = ({
     };
 
     return (
-        <FetchView state={fetchState}>
+        <FetchView state={fetchState} fallback={ioc.errorService.handleGlobalError}>
             {(todo) => (
                 <Content todo={todo} />
             )}

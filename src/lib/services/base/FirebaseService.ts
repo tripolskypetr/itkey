@@ -50,11 +50,28 @@ export class FirebaseService {
         makeAutoObservable(this);
     };
 
+    public getAuthState = async () => {
+        try {
+            return await new Promise((resolve, reject) =>
+                this.app.auth().onAuthStateChanged((currentUser) => {
+                    if (currentUser) {
+                        resolve(true);
+                    } else {
+                        resolve(false);
+                    }
+                },
+                    (error) => reject(error)
+                ));
+        } catch {
+            return false;
+        }
+    };
+
     public register = async ({ email, password }: { email: string, password: string }) => {
         let isOk = true;
         try {
             await auth.createUserWithEmailAndPassword(email, password);
-        } catch(error) {
+        } catch (error) {
             const msg = parseErrorMessage(error);
             this.alertService.notify(msg);
             isOk = false;
@@ -67,7 +84,7 @@ export class FirebaseService {
         let isOk = true;
         try {
             await auth.signInWithEmailAndPassword(email, password);
-        } catch(error) {
+        } catch (error) {
             const msg = parseErrorMessage(error);
             this.alertService.notify(msg);
             isOk = false;
@@ -84,18 +101,21 @@ export class FirebaseService {
     public prefetch = singleshot(async () => {
         auth.useDeviceLanguage();
         await auth.setPersistence("session");
+        const isSignedIn = await this.getAuthState();
+        if (!isSignedIn) {
+            this.routerService.push('/login-page');
+        }
         currentUser$
             .operator(Operator.count())
             .connect(({ count, value: currentUser }) => {
-                if (currentUser) {
-                    if (this.routerService.location.pathname="/login_page") {
-                        this.routerService.push('/client_list');
-                    }
-                } else if (count > 1) {
+                if (!currentUser && count > 1) {
                     reloadPage();
                 }
             });
         auth.onAuthStateChanged(currentUser$.next);
+        window.addEventListener('offline', () => {
+            reloadPage();
+        });
     });
 
 };
