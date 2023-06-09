@@ -103,7 +103,7 @@ export class FirebaseService {
         await auth.setPersistence("session");
         const isSignedIn = await this.getAuthState();
         if (!isSignedIn) {
-            this.routerService.push('/login-page');
+            this.routerService.push('/login_page');
         }
         currentUser$
             .operator(Operator.count())
