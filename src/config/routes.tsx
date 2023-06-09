@@ -40,9 +40,6 @@ export const routes: IRouteItem[] = [
   {
     path: '/',
     sideMenu: "root.client.client_list",
-    prefetch: async () => {
-      await ioc.firebaseService.prefetch();
-    },
     redirect: () => {
       if (ioc.firebaseService.isAuthorized) {
         return "/client_list";

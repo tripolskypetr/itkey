@@ -8,6 +8,7 @@ import {
     IListAction,
     useArrayPaginator,
     SelectionMode,
+    useQueryPagination,
 } from 'react-declarative';
 import { observer } from 'mobx-react';
 
@@ -124,6 +125,8 @@ const heightRequest = () => window.innerHeight - 75;
 
 export const ClientListPage = observer(() => {
 
+    const { listProps } = useQueryPagination();
+
     const handler = useArrayPaginator(async () => await ioc.clientViewService.list(), {
         onLoadStart: () => ioc.layoutService.setAppbarLoader(true),
         onLoadEnd: () => ioc.layoutService.setAppbarLoader(false),
@@ -159,6 +162,7 @@ export const ClientListPage = observer(() => {
                 onRowClick={handleClick}
                 onAction={handleAction}
                 selectionMode={SelectionMode.Multiple}
+                {...listProps}
             />
         </>
     );

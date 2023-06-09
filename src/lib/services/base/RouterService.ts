@@ -1,8 +1,8 @@
-import { Action, Blocker, BrowserHistory, Listener, Location, State, To, createMemoryHistory } from "history";
-
+import { Action, Blocker, BrowserHistory, Listener, Location, State, To } from "history";
+import { createWindowHistory } from 'react-declarative';
 import { makeAutoObservable } from "mobx";
 
-const browserHistory = createMemoryHistory();
+const browserHistory = createWindowHistory();
 
 export class RouterService implements BrowserHistory {
 
