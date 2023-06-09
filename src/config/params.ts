@@ -1,4 +1,4 @@
-export const CC_APP_NAME = 'OneCRM';
+export const CC_APP_NAME = 'ikCRM';
 
 export const CC_FIREBASE_CONFIG = {
     apiKey: "AIzaSyAT4f6fTjEgH2qwVouBCSbQt3XNtxqmsVk",
