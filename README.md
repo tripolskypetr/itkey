@@ -19,13 +19,13 @@ npm start
 
 ## Иерархия вложенности сервисов
 
-**System space** - На нулевом уровне вложенности ([src/lib/services/base/FirebaseService.ts](src/lib/services/base/FirebaseService.ts)) осуществляется обертка над клиентом облачной базы данных [Firebase](https://firebase.google.com/). Если в последующем потребуется убрать бюджетные издержки, этот подход позволит прозрачно перейти на бесплатный аналог [AppWrite](https://appwrite.io). Авторизация через почту или социальные сети, обработка ошибок и др
+**0. System space** - На нулевом уровне вложенности ([src/lib/services/base/FirebaseService.ts](src/lib/services/base/FirebaseService.ts)) осуществляется обертка над клиентом облачной базы данных [Firebase](https://firebase.google.com/). Если в последующем потребуется убрать бюджетные издержки, этот подход позволит прозрачно перейти на бесплатный аналог [AppWrite](https://appwrite.io). Авторизация через почту или социальные сети, обработка ошибок и др
 
-**Model** - На первом уровне вложенности ([src/lib/services/db/ClientDbService.ts](src/lib/services/db/ClientDbService.ts)) осуществляется сериализация и десериализация моделей данных и запись в базу данных
+**1. Model** - На первом уровне вложенности ([src/lib/services/db/ClientDbService.ts](src/lib/services/db/ClientDbService.ts)) осуществляется сериализация и десериализация моделей данных и запись в базу данных
 
-**Controller** - На втором уровне вложенности ([src/lib/services/view/ClientViewService.ts](src/lib/services/view/ClientViewService.ts)) осуществляется обработка вычисляемых полей к данным из базы данных (например, `createdAt`, `updatedAt`, `createdBy`, `updatedBy`, просчет итого для суммы списка товаров из сметы)
+**2. Controller** - На втором уровне вложенности ([src/lib/services/view/ClientViewService.ts](src/lib/services/view/ClientViewService.ts)) осуществляется обработка вычисляемых полей к данным из базы данных (например, `createdAt`, `updatedAt`, `createdBy`, `updatedBy`, просчет итого для суммы списка товаров из сметы)
 
-**View** - На третьем уровне вложенности ([src/pages/view/ClientListPage/ClientListPage.ts](src/pages/view/ClientListPage/ClientListPage.ts)) происходит опрос пользовательского ввода для обработки данных. Обратите внимание на декларативный подход, [повторное использование кода](https://github.com/react-declarative/react-declarative) исключает временные издержки на исправление типовых ошибок
+**3. View** - На третьем уровне вложенности ([src/pages/view/ClientListPage/ClientListPage.ts](src/pages/view/ClientListPage/ClientListPage.ts)) происходит опрос пользовательского ввода для обработки данных. Обратите внимание на декларативный подход, [повторное использование кода](https://github.com/react-declarative/react-declarative) исключает временные издержки на исправление типовых ошибок
 
 ## Консистентность данных
 
