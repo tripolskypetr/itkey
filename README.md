@@ -2,6 +2,8 @@
 
 > Пример использования [Serverless](https://en.wikipedia.org/wiki/Serverless_computing) архитектуры для команд IT специалистов, имеющих ограничения по бюджету на проект, как следствие, квалификации кадров
 
+![screencast](./docs/screencast.gif)
+
 ## Запуск проекта
 
 ```bash
