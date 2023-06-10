@@ -125,7 +125,9 @@ const heightRequest = () => window.innerHeight - 75;
 
 export const ClientListPage = observer(() => {
 
-    const { listProps } = useQueryPagination();
+    const { listProps } = useQueryPagination(undefined, {
+        fallback: ioc.errorService.handleGlobalError,
+    });
 
     const handler = useArrayPaginator(async () => await ioc.clientViewService.list(), {
         onLoadStart: () => ioc.layoutService.setAppbarLoader(true),
