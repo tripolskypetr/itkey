@@ -23,6 +23,6 @@ npm start
 
 **Model** - На первом уровне вложенности ([src/lib/services/db/ClientDbService.ts](src/lib/services/db/ClientDbService.ts)) осуществляется сереализация и десериализация моделей данных и запись в базу данных
 
-**Controller** - На втором уровне вложенности ([src/lib/services/view/ClientViewService.ts](src/lib/services/db/ClientDbService.ts)) осуществляется обработка вычисляемых полей к данным из базы данных (например, `createdAt`, `updatedAt`, `createdBy`, `updatedBy`, просчет итого для суммы списка товаров из сметы)
+**Controller** - На втором уровне вложенности ([src/lib/services/view/ClientViewService.ts](src/lib/services/view/ClientViewService.ts)) осуществляется обработка вычисляемых полей к данным из базы данных (например, `createdAt`, `updatedAt`, `createdBy`, `updatedBy`, просчет итого для суммы списка товаров из сметы)
 
 **View** - На третьем уровне вложенности ([src/pages/view/ClientListPage/ClientListPage.ts](src/pages/view/ClientListPage/ClientListPage.ts)) происходит опрос пользовательского ввода для обработки данных. Обратите внимание на декларативный подход, [повторное использование кода](https://github.com/react-declarative/react-declarative) исключает временые издержки на исправление типовых ошибок
