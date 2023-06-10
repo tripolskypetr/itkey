@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { inject, reloadPage, singleshot, Subject, Operator } from "react-declarative";
 
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 
