@@ -22,27 +22,22 @@ const filters: TypedField[] = [
     {
         type: FieldType.Text,
         name: 'first_name',
-        title: 'First name',
     },
     {
         type: FieldType.Text,
         name: 'last_name',
-        title: 'Last name',
     },
     {
         type: FieldType.Text,
         name: 'middle_name',
-        title: 'Middle name',
     },
     {
         type: FieldType.Text,
         name: 'email',
-        title: 'Email',
     },
     {
         type: FieldType.Text,
         name: 'phone',
-        title: 'Phone',
     },
 ];
 

@@ -14,57 +14,46 @@ const fields: IField[] = [
     {
         type: FieldType.Text,
         name: 'first_name',
-        title: 'First Name',
     },
     {
         type: FieldType.Text,
         name: 'last_name',
-        title: 'Last Name',
     },
     {
         type: FieldType.Text,
         name: 'middle_name',
-        title: 'Middle Name',
     },
     {
         type: FieldType.Text,
         name: 'phone',
-        title: 'Phone',
     },
     {
         type: FieldType.Text,
         name: 'additional_phone',
-        title: 'Additional Phone',
     },
     {
         type: FieldType.Text,
         name: 'email',
-        title: 'Email',
     },
     {
         type: FieldType.Text,
         name: 'source',
-        title: 'Source',
     },
     {
         type: FieldType.Text,
         name: 'looking_for',
-        title: 'Looking For',
     },
     {
         type: FieldType.Text,
         name: 'series_number',
-        title: 'Series Number',
     },
     {
         type: FieldType.Text,
         name: 'issued_by',
-        title: 'Issued By',
     },
     {
         type: FieldType.Text,
         name: 'inn',
-        title: 'INN',
     },
 ];
 
