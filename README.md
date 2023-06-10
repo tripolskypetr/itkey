@@ -26,3 +26,9 @@ npm start
 **Controller** - На втором уровне вложенности ([src/lib/services/view/ClientViewService.ts](src/lib/services/view/ClientViewService.ts)) осуществляется обработка вычисляемых полей к данным из базы данных (например, `createdAt`, `updatedAt`, `createdBy`, `updatedBy`, просчет итого для суммы списка товаров из сметы)
 
 **View** - На третьем уровне вложенности ([src/pages/view/ClientListPage/ClientListPage.ts](src/pages/view/ClientListPage/ClientListPage.ts)) происходит опрос пользовательского ввода для обработки данных. Обратите внимание на декларативный подход, [повторное использование кода](https://github.com/react-declarative/react-declarative) исключает временые издержки на исправление типовых ошибок
+
+## Консистентность данных
+
+Firebase pгарантирует целостность данных при использовании транзакций](https://firebase.google.com/docs/firestore/manage-data/transactions). Я планирую добавлять интеграцию к сторонним API через консольные приложения, оркестрация которых осуществлена через [PM2](https://pm2.keymetrics.io/), так как я ограничен в стоимости и квалификации кадров. Для решения поставленных передо мной задач согласования контрактов и полей `createdBy`,  `updatedBy` будет достаточно. Дополнительно, Firebase и AppWrite позволяют подписываться на обновления моделей без AJAX [с использованием WebSocket и SSE](https://firebase.google.com/docs/firestore/query-data/listen)
+
+
