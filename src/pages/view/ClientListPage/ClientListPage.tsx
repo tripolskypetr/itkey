@@ -45,7 +45,6 @@ const columns: IColumn<IClientDocument>[] = [
     {
         type: ColumnType.Text,
         field: 'id',
-        headerName: 'ID',
         secondary: true,
         width: () => 150,
     },
@@ -66,14 +65,12 @@ const columns: IColumn<IClientDocument>[] = [
     },
     {
         type: ColumnType.Text,
-        headerName: 'Phone',
         primary: true,
         field: 'phone',
         width: (fullWidth) => Math.max(fullWidth / 3 - 250, 200),
     },
     {
         type: ColumnType.Text,
-        headerName: 'Email',
         primary: true,
         field: 'email',
         width: (fullWidth) => Math.max(fullWidth / 3 - 250, 200),
